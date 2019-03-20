@@ -1,1 +1,2 @@
-New-Item -Path c: -Name "testfile1.txt" -ItemType "file" -Value "This is a text string."
+$a=hostname
+New-Item -Path c: -Name "calınanbilgi.txt" -ItemType "file" -Value $a

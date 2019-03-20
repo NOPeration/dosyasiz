@@ -1,0 +1,35 @@
+function Post-Twitter {
+    param(
+        [Parameter(Mandatory=$true)][string]$url
+    )
+    if (!$script:accessToken) {
+        throw 'token is not initialized'
+    }
+
+  try {
+    $cons = New-Object devdefined.oauth.consumer.oauthconsumercontext
+    $cons.ConsumerKey = $consumerKey
+    $cons.ConsumerSecret = $consumerSecret
+    $cons.SignatureMethod = [devdefined.oauth.framework.signaturemethod]::HmacSha1
+    $session = new-object DevDefined.OAuth.Consumer.OAuthSession `
+      $cons,
+      "http://twitter.com/oauth/request_token",
+      "http://twitter.com/oauth/authorize",
+      "http://twitter.com/oauth/access_token"
+    $token = Get-AccessToken 
+    $req = $session.Request($token)
+    $req.Context.RequestMethod = 'POST'
+    $req.Context.RawUri = new-object Uri $url
+    [DevDefined.OAuth.Consumer.ConsumerRequestExtensions]::ReadBody($req)
+    } catch {
+    Write-Warning "Exception: $_"
+    $null
+  }
+}
+
+
+
+
+add-type -assembly System.Web
+$status = [system.Web.Httputility]::UrlEncode('some tweet')
+Post-Twitter "http://api.twitter.com/1/statuses/update.xml?status=$status"

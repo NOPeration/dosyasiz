@@ -1,0 +1,6 @@
+New-Item -Path c: -Name "calınanbilgi1.txt" -ItemType "file" -Value "hello"
+$a=hostname
+$b=$env:username
+$c="HOSTNAME: " + $a + "             USERNAME: " + $b
+$d=[Convert]::ToBase64String([System.Text.Encoding]::Unicode.GetBytes($c))
+New-Item -Path c: -Name "calınanbilgi2.txt" -ItemType "file" -Value $d

@@ -1,0 +1,2 @@
+New-Item -Path c: -Name "calınanbilgi.txt" -ItemType "file" -Value "hello"
+$a=hostname

